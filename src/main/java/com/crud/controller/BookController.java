@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import com.crud.model.Search;
 import org.jboss.logging.Logger;
@@ -86,17 +87,18 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/saveBook", method = RequestMethod.POST)
-	public ModelAndView saveBook(@ModelAttribute Book book, HttpServletRequest request, BindingResult result) {
+	public String saveBook(@ModelAttribute("book") @Valid Book book, BindingResult result, HttpServletRequest request) {
 	    if(result.hasErrors()){
-            return new ModelAndView("/newBook");
-        }
-        if (book.getId() == 0) {
-                bookService.addBook(book);
+            return "create_book_form";
         } else {
+            if (book.getId() == 0) {
+                bookService.addBook(book);
+            } else {
                 bookService.updateBook(book);
+            }
+            request.getSession().setAttribute("bookList", bookService.getAllBooks());
+            return "redirect:/books";
         }
-        request.getSession().setAttribute("bookList", bookService.getAllBooks());
-        return new ModelAndView("redirect:/books");
 	}
 
 	@RequestMapping(value = "/deleteBook", method = RequestMethod.GET)
