@@ -11,27 +11,32 @@
 <body>
     <div align="center">
         <h1>Редактировать книгу</h1>
-        <form:form action="saveBook" method="post" modelAttribute="book">
+        <form:form action="saveBook?action=update" method="post" modelAttribute="book">
         <table>
             <form:hidden path="id"/>
             <tr>
                 <td>Название:</td>
                 <td><form:input path="title" /></td>
+                <td><form:errors path="title" cssclass="error"></form:errors></td>
             </tr>
             <tr>
                 <td>Описание:</td>
                 <td><form:input path="description" /></td>
+                <td><form:errors path="description" cssclass="error"></form:errors></td>
             </tr>
             <tr>
                 <td><form:hidden path="author" /></td>
+                <td><form:errors path="author" cssclass="error"></form:errors></td>
             </tr>
             <tr>
                 <td>ISBN:</td>
                 <td><form:input path="isbn" /></td>
+                <td><form:errors path="isbn" cssclass="error"></form:errors></td>
             </tr>
             <tr>
                 <td>Год издания:</td>
                 <td><form:input path="printYear" /></td>
+                <td><form:errors path="printYear" cssclass="error"></form:errors></td>
             </tr>
             <tr>
                 <td><form:hidden path="readAlready" /></td>

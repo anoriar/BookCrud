@@ -11,7 +11,7 @@
 <body>
     <div align="center">
         <h1>Добавить новую книгу</h1>
-        <form:form action="saveBook" method="post" modelAttribute="book">
+        <form:form action="saveBook?action=create" method="post" modelAttribute="book">
         <table>
             <form:hidden path="id"/>
             <tr>

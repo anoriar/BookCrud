@@ -3,6 +3,7 @@ package com.crud.model;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -29,28 +31,33 @@ public class Book implements Serializable {
     @Column
     @NotNull
     @NotEmpty
+    @Size(max=255)
     private String title;
 
     @Column
     @NotNull
     @NotEmpty
+    @Size(max=255)
     private String description;
 
     @Column
     @NotNull
     @NotEmpty
+    @Size(max=100)
     private String author;
 
     @Column
     @NotNull
     @NotEmpty
-    @Size(min=1, max=20)
+    @Size(max=20)
     private String isbn;
 
     @Column
     @NotNull
-    @Min(1) @Max(2017)
-    private int printYear;
+    @NotEmpty
+    @Size(max=11)
+    @Pattern(regexp="[0-9]+")
+    private String printYear;
 
     @Column
     private boolean readAlready;
@@ -95,11 +102,11 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public int getPrintYear() {
+    public String getPrintYear() {
         return printYear;
     }
 
-    public void setPrintYear(int printYear) {
+    public void setPrintYear(String printYear) {
         this.printYear = printYear;
     }
 

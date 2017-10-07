@@ -87,18 +87,22 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/saveBook", method = RequestMethod.POST)
-	public String saveBook(@ModelAttribute("book") @Valid Book book, BindingResult result, HttpServletRequest request) {
+	public ModelAndView saveBook(@ModelAttribute("book") @Valid Book book, BindingResult result, HttpServletRequest request) {
 	    if(result.hasErrors()){
-            return "create_book_form";
+
+	        if(request.getParameter("action").equals("create"))
+                return new ModelAndView("create_book_form", "book", book);
+	        else if(request.getParameter("action").equals("update"))
+                return new ModelAndView("update_book_form", "book", book);
         } else {
             if (book.getId() == 0) {
                 bookService.addBook(book);
             } else {
                 bookService.updateBook(book);
             }
-            request.getSession().setAttribute("bookList", bookService.getAllBooks());
-            return "redirect:/books";
         }
+        request.getSession().setAttribute("bookList", bookService.getAllBooks());
+        return new ModelAndView("redirect:/books");
 	}
 
 	@RequestMapping(value = "/deleteBook", method = RequestMethod.GET)
